@@ -1,4 +1,4 @@
-package com.example.openguide.ui
+package com.pardevs.openguide.ui
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Explore

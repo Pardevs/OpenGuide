@@ -1,4 +1,4 @@
-package com.example.openguide.ui
+package com.pardevs.openguide.ui
 import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.layout.ContentScale

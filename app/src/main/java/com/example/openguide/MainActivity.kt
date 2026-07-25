@@ -1,10 +1,10 @@
-package com.example.openguide
+package com.pardevs.openguide
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.MaterialTheme
-import com.example.openguide.ui.MainScreen
+import com.pardevs.openguide.ui.MainScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
