@@ -1,5 +1,5 @@
 
-package com.example.openguide.ui
+package com.pardevs.openguide.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
