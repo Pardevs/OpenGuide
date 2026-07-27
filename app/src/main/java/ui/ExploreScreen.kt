@@ -38,21 +38,21 @@ val tbilisiPlaces = listOf(
     Place(
         name = "Mtatsminda Park",
         imageRes = R.drawable.mtatsminda_park,
-        description = "\uD83C\uDFA2 Amusement park\nCloses 12:00 AM\nRating:4.6",
+        description = "\uD83C\uDFA2 Amusement park\nCloses 12:00 AM\nRating:4.6\uD83C\uDF1F",
         location = "Mtatsminda Park, Upper Plateau, Funicular, Tbilisi 0105, Georgia",
         mapQuery = "Mtatsminda+Park+Tbilisi"
     ),
     Place(
         name = "Narikala Fortress",
         imageRes = R.drawable.narikala_fortress,
-        description = "Fortress \nOpen 24/7\nRating:4,7" ,
+        description = "Fortress \nOpen 24/7\nRating:4,7\uD83C\uDF1F" ,
         location = "Narikala Fortress, Sololaki Hill, Old Town, Tbilisi 0105, Georgia",
         mapQuery = "Narikala+Fortress+Tbilisi"
     ),
     Place(
         name = "Holy Trinity Cathedral ",
         imageRes = R.drawable.mathedral,
-        description ="The Holy Trinity Cathedral of Tbilisi, commonly known as Sameba, is a modern symbol of Georgia's spiritual rebirth. In 1989, as Georgia prepared for independence from the Soviet Union, plans were drawn up to build a massive cathedral to mark 2,000 years of Christianity. Construction was delayed by political unrest after the Soviet collapse, but work finally began on Elia Hill in 1995. Funded largely by private donations and completed in 2004, Sameba blends traditional Georgian church architecture with Byzantine elements. Soaring over 87 meters high with a golden dome, it is the largest church in Georgia and a major landmark overlooking the entire capital.",
+        description ="Anglican Church\nCloses 9:00 PM(Weekends),\n 10:00 PM(Weekdays)\nRating:4,8\uD83C\uDF1F",
         location = "Holy Trinity Cathedral of Tbilisi, Elia Hill, Avlabari, Tbilisi 0103, Georgia",
         mapQuery = "Holy+Trinity+Cathedral+Tbilisi",
     ),
