@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.openguide"
+    namespace = "com.pardevs.openguide"
     compileSdk {
         version = release(36)
     }

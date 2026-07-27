@@ -1,10 +1,8 @@
 package com.pardevs.openguide.ui
-import androidx.compose.foundation.Image
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.layout.ContentScale
-import com.example.openguide.R
+
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -18,11 +16,47 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.pardevs.openguide.R
 
+
+data class Place(
+    val name: String,
+    val imageRes: Int,
+    val description: String,
+    val location: String,
+    val mapQuery: String
+)
+
+// All places for Tbilisi - add more Place(...) entries here later
+val tbilisiPlaces = listOf(
+    Place(
+        name = "Mtatsminda Park",
+        imageRes = R.drawable.mtatsminda_park,
+        description = "\uD83C\uDFA2 Amusement park\nCloses 12:00 AM\nRating:4.6",
+        location = "Mtatsminda Park, Upper Plateau, Funicular, Tbilisi 0105, Georgia",
+        mapQuery = "Mtatsminda+Park+Tbilisi"
+    ),
+    Place(
+        name = "Narikala Fortress",
+        imageRes = R.drawable.narikala_fortress,
+        description = "Fortress \nOpen 24/7\nRating:4,7" ,
+        location = "Narikala Fortress, Sololaki Hill, Old Town, Tbilisi 0105, Georgia",
+        mapQuery = "Narikala+Fortress+Tbilisi"
+    ),
+    Place(
+        name = "Holy Trinity Cathedral ",
+        imageRes = R.drawable.mathedral,
+        description ="The Holy Trinity Cathedral of Tbilisi, commonly known as Sameba, is a modern symbol of Georgia's spiritual rebirth. In 1989, as Georgia prepared for independence from the Soviet Union, plans were drawn up to build a massive cathedral to mark 2,000 years of Christianity. Construction was delayed by political unrest after the Soviet collapse, but work finally began on Elia Hill in 1995. Funded largely by private donations and completed in 2004, Sameba blends traditional Georgian church architecture with Byzantine elements. Soaring over 87 meters high with a golden dome, it is the largest church in Georgia and a major landmark overlooking the entire capital.",
+        location = "Holy Trinity Cathedral of Tbilisi, Elia Hill, Avlabari, Tbilisi 0103, Georgia",
+        mapQuery = "Holy+Trinity+Cathedral+Tbilisi",
+    ),
+)
 @Composable
 fun ExploreScreen(modifier: Modifier = Modifier) {
     val countryCities = mapOf(
@@ -38,10 +72,20 @@ fun ExploreScreen(modifier: Modifier = Modifier) {
     var selectedCity by remember { mutableStateOf<String?>(null) }
     var countryExpanded by remember { mutableStateOf(false) }
     var cityExpanded by remember { mutableStateOf(false) }
-    var showDetail by remember { mutableStateOf(false) }
 
-    if (showDetail) {
-        MtatsmindaParkDetailScreen(onBack = { showDetail = false })
+    // Tracks which place's detail page is open (by name), or null if none
+    var openDetail by remember { mutableStateOf<String?>(null) }
+
+    val selectedPlace = tbilisiPlaces.find { it.name == openDetail }
+    if (selectedPlace != null) {
+        PlaceDetailScreen(
+            name = selectedPlace.name,
+            imageRes = selectedPlace.imageRes,
+            description = selectedPlace.description,
+            location = selectedPlace.location,
+            mapQuery = selectedPlace.mapQuery,
+            onBack = { openDetail = null }
+        )
         return
     }
 
@@ -121,34 +165,44 @@ fun ExploreScreen(modifier: Modifier = Modifier) {
         )
 
         if (selectedCountry == "Georgia" && selectedCity == "Tbilisi") {
-            Box(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth()
-                    .background(Color(0xFF003366), shape = RoundedCornerShape(12.dp))
-                    .clickable { showDetail = true }
-                    .padding(16.dp)
-            ) {
-                Column {
-                    Text(
-                        text = "Mtatsminda Park",
-                        color = Color.White,
-                        fontSize = 22.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = "Tbilisi-0105",
-                        color = Color.LightGray,
-                        fontSize = 14.sp
-                    )
+            tbilisiPlaces.forEach { place ->
+                Box(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .fillMaxWidth()
+                        .background(Color(0xFF003366), shape = RoundedCornerShape(12.dp))
+                        .clickable { openDetail = place.name }
+                        .padding(16.dp)
+                ) {
+                    Column {
+                        Text(
+                            text = place.name,
+                            color = Color.White,
+                            fontSize = 22.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = place.location,
+                            color = Color.LightGray,
+                            fontSize = 14.sp
+                        )
+                    }
                 }
+                Spacer(modifier = Modifier.height(12.dp))
             }
         }
     }
 }
 
 @Composable
-fun MtatsmindaParkDetailScreen(onBack: () -> Unit) {
+fun PlaceDetailScreen(
+    name: String,
+    imageRes: Int,
+    description: String,
+    location: String,
+    mapQuery: String,
+    onBack: () -> Unit
+) {
     val context = LocalContext.current
 
     Column(
@@ -169,8 +223,8 @@ fun MtatsmindaParkDetailScreen(onBack: () -> Unit) {
         }
 
         Image(
-            painter = painterResource(id = R.drawable.mtatsminda_park),
-            contentDescription = "Mtatsminda Park",
+            painter = painterResource(id = imageRes),
+            contentDescription = name,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(220.dp),
@@ -179,7 +233,7 @@ fun MtatsmindaParkDetailScreen(onBack: () -> Unit) {
 
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
-                text = "Mtatsminda Park",
+                text = name,
                 color = Color.White,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
@@ -188,7 +242,7 @@ fun MtatsmindaParkDetailScreen(onBack: () -> Unit) {
             Spacer(modifier = Modifier.height(12.dp))
 
             Text(
-                text = "High atop Mount Mtatsminda, the park began its life in 1938 when Soviet authorities transformed the mountain plateau into a sprawling public recreation zone complete with gardens, walkways, and early attractions. The mountain itself had already been linked to the city center below since 1905 by a historic cable funicular railway. After the collapse of the Soviet Union in the 1990s, the area fell into deep neglect until a massive renovation in the late 2000s completely revitalized it. Today, it stands as a bustling amusement and landscape park featuring family rides, restaurants, and its famous 65-meter Giant Ferris Wheel perched right on the cliff edge.",
+                text = description,
                 color = Color.White,
                 fontSize = 15.sp
             )
@@ -196,7 +250,7 @@ fun MtatsmindaParkDetailScreen(onBack: () -> Unit) {
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "Location: Mtatsminda Park, Upper Plateau, Funicular, Tbilisi 0105, Georgia",
+                text = "Location: $location",
                 color = Color.LightGray,
                 fontSize = 13.sp
             )
@@ -205,14 +259,14 @@ fun MtatsmindaParkDetailScreen(onBack: () -> Unit) {
 
             Button(
                 onClick = {
-                    val gmmIntentUri = Uri.parse("google.navigation:q=Mtatsminda+Park+Tbilisi")
+                    val gmmIntentUri = Uri.parse("google.navigation:q=$mapQuery")
                     val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
                     mapIntent.setPackage("com.google.android.apps.maps")
 
                     if (mapIntent.resolveActivity(context.packageManager) != null) {
                         context.startActivity(mapIntent)
                     } else {
-                        val fallbackUri = Uri.parse("https://www.google.com/maps/dir/?api=1&destination=Mtatsminda+Park+Tbilisi")
+                        val fallbackUri = Uri.parse("https://www.google.com/maps/dir/?api=1&destination=$mapQuery")
                         context.startActivity(Intent(Intent.ACTION_VIEW, fallbackUri))
                     }
                 },
