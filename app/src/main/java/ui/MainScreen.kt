@@ -6,13 +6,14 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.example.openguide.MapScreen
 
 val NavyBlue = Color(0xFF001F3F)
 
 @Composable
 fun MainScreen() {
     var selectedItem by remember { mutableStateOf<BottomNavItem>(BottomNavItem.Explore) }
-    val items = listOf(BottomNavItem.Explore, BottomNavItem.Search, BottomNavItem.Flights)
+    val items = listOf(BottomNavItem.Explore, BottomNavItem.Search, BottomNavItem.Flights, BottomNavItem.Map)
 
     Scaffold(
         containerColor = NavyBlue,
@@ -46,6 +47,7 @@ fun MainScreen() {
                 is BottomNavItem.Explore -> ExploreScreen()
                 is BottomNavItem.Search -> SearchScreen()
                 is BottomNavItem.Flights -> FlightScreen()
+                is BottomNavItem.Map -> MapScreen()
             }
         }
     }
