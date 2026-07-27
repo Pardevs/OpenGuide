@@ -12,7 +12,7 @@ val NavyBlue = Color(0xFF001F3F)
 @Composable
 fun MainScreen() {
     var selectedItem by remember { mutableStateOf<BottomNavItem>(BottomNavItem.Explore) }
-    val items = listOf(BottomNavItem.Explore, BottomNavItem.Search)
+    val items = listOf(BottomNavItem.Explore, BottomNavItem.Search, BottomNavItem.Flights)
 
     Scaffold(
         containerColor = NavyBlue,
@@ -45,6 +45,7 @@ fun MainScreen() {
             when (selectedItem) {
                 is BottomNavItem.Explore -> ExploreScreen()
                 is BottomNavItem.Search -> SearchScreen()
+                is BottomNavItem.Flights -> FlightScreen()
             }
         }
     }
